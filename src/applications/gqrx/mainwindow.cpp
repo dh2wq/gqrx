@@ -47,6 +47,7 @@
 #include <QSvgWidget>
 #include "qtgui/ioconfig.h"
 #include "mainwindow.h"
+#include "qtgui/dxc_spots.h"
 
 /* Qt Designer files */
 #include "ui_mainwindow.h"
@@ -68,6 +69,7 @@ MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
 {
     ui->setupUi(this);
     Bookmarks::create();
+    DXCSpots::create();
 
     /* Initialise default configuration directory */
     QByteArray xdg_dir = qgetenv("XDG_CONFIG_HOME");
@@ -2221,6 +2223,11 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionAboutQt_triggered()
 {
     QMessageBox::aboutQt(this, tr("About Qt"));
+    DXCSpotInfo spot;
+    spot.frequency = 14050000;
+    spot.name = "DH2WQ";
+    DXCSpots::Get().add(spot);
+    ui->plotter->updateOverlay();
 }
 
 void MainWindow::on_actionAddBookmark_triggered()

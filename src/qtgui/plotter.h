@@ -38,6 +38,7 @@ public:
     void setCenterLineEnabled(bool enabled) { m_CenterLineEnabled = enabled; }
     void setTooltipsEnabled(bool enabled) { m_TooltipsEnabled = enabled; }
     void setBookmarksEnabled(bool enabled) { m_BookmarksEnabled = enabled; }
+    void setDXCSpotsEnabled(bool enabled) { m_DXCSpotsEnabled = enabled; }
 
     void setNewFttData(float *fftData, int size);
     void setNewFttData(float *fftData, float *wfData, int size);
@@ -223,6 +224,7 @@ private:
     bool        m_FilterBoxEnabled;   /*!< Draw filter box. */
     bool        m_TooltipsEnabled;     /*!< Tooltips enabled */
     bool        m_BookmarksEnabled;   /*!< Show/hide bookmarks on spectrum */
+    bool        m_DXCSpotsEnabled;   /*!< Show/hide DXC Spots on spectrum */
     int         m_DemodHiCutFreq;
     int         m_DemodLowCutFreq;
     int         m_DemodFreqX;		//screen coordinate x position
@@ -269,6 +271,7 @@ private:
     QMap<int,int>   m_Peaks;
 
     QList< QPair<QRect, qint64> >     m_BookmarkTags;
+    QList< QPair<QRect, qint64> >     m_DXCSpotTags;
 
     // Waterfall averaging
     quint64     tlast_wf_ms;        // last time waterfall has been updated
