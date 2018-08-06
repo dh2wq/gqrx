@@ -39,13 +39,11 @@ struct DXCSpotInfo
     QTime time;
     QColor color;
 
-    static const QColor DefaultColor;
-
     DXCSpotInfo()
     {
         this->frequency = 0;
         this->time = QTime::currentTime();
-        this->color=DefaultColor;
+        this->color=(Qt::lightGray);
     }
 
     bool operator<(const DXCSpotInfo &other) const
@@ -65,6 +63,7 @@ public:
     static DXCSpots& Get();
 
     void add(DXCSpotInfo& info);
+    void checkSpotTimeout();
     void remove(int index);
     DXCSpotInfo& getDXCSpot(int i) { return m_DXCSpotList[i]; }
     QList<DXCSpotInfo> getDXCSpotsInRange(qint64 low, qint64 high);

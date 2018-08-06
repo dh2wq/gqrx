@@ -30,8 +30,8 @@
 #include "dxc_spots.h"
 #include <stdio.h>
 #include <wchar.h>
+#include <QDebug>
 
-const QColor DXCSpotInfo::DefaultColor(Qt::lightGray);
 DXCSpots* DXCSpots::m_pThis = 0;
 
 DXCSpots::DXCSpots()
@@ -50,7 +50,22 @@ DXCSpots& DXCSpots::Get()
 
 void DXCSpots::add(DXCSpotInfo &info)
 {
+    info.time = QTime::currentTime();
     m_DXCSpotList.append(info);
+    std::stable_sort(m_DXCSpotList.begin(),m_DXCSpotList.end());
+    emit( DXCSpotsChanged() );
+}
+
+void DXCSpots::checkSpotTimeout()
+{
+#define SPOT_TIMEOUT_SEC (1 * 60)
+    for (int i = 0; i < m_DXCSpotList.size(); i++)
+    {
+        if ( SPOT_TIMEOUT_SEC < m_DXCSpotList[i].time.secsTo(QTime::currentTime() ))
+        {
+            m_DXCSpotList.removeAt(i);
+        }
+    }
     std::stable_sort(m_DXCSpotList.begin(),m_DXCSpotList.end());
     emit( DXCSpotsChanged() );
 }
@@ -87,5 +102,6 @@ QList<DXCSpotInfo> DXCSpots::getDXCSpotsInRange(qint64 low, qint64 high)
 
 const QColor DXCSpotInfo::GetColor() const
 {
+    return DXCSpotInfo::color;
 }
 

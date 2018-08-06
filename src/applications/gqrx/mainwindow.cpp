@@ -256,6 +256,10 @@ MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
     connect(uiDockBookmarks, SIGNAL(newBookmarkActivated(qint64, QString, int)), this, SLOT(onBookmarkActivated(qint64, QString, int)));
     connect(uiDockBookmarks->actionAddBookmark, SIGNAL(triggered()), this, SLOT(on_actionAddBookmark_triggered()));
 
+    //DXC Spots
+    connect(remote, SIGNAL(newClusterSpot(DXCSpotInfo)),this , SLOT(addClusterSpot(DXCSpotInfo)));
+    dxc_timer = new QTimer(this);
+    connect(dxc_timer, SIGNAL(timeout()), this, SLOT(checkDXCSpotTimeout()));
 
     // I/Q playback
     connect(iq_tool, SIGNAL(startRecording(QString)), this, SLOT(startIqRecording(QString)));
@@ -2306,4 +2310,17 @@ void MainWindow::on_actionAddBookmark_triggered()
         uiDockBookmarks->updateBookmarks();
         ui->plotter->updateOverlay();
     }
+}
+
+void MainWindow::addClusterSpot(DXCSpotInfo info)
+{
+    dxc_timer->start(1000);
+    DXCSpots::Get().add(info);
+    ui->plotter->updateOverlay();
+}
+
+void MainWindow::checkDXCSpotTimeout()
+{
+    DXCSpots::Get().checkSpotTimeout();
+    ui->plotter->updateOverlay();
 }

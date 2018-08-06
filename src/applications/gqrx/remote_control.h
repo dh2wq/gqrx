@@ -30,6 +30,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QtNetwork>
+#include "../../qtgui/dxc_spots.h"
 
 /*! \brief Simple TCP server for remote control.
  *
@@ -83,6 +84,7 @@ public slots:
     void setNewFrequency(qint64 freq);
     void setFilterOffset(qint64 freq);
     void setLnbLo(double freq_mhz);
+    void setNewClusterSpot(DXCSpotInfo info);
     void setBandwidth(qint64 bw);
     void setSignalLevel(float level);
     void setMode(int mode);
@@ -95,6 +97,7 @@ signals:
     void newFrequency(qint64 freq);
     void newFilterOffset(qint64 offset);
     void newLnbLo(double freq_mhz);
+    void newClusterSpot(DXCSpotInfo info);
     void newMode(int mode);
     void newPassband(int passband);
     void newSquelchLevel(double level);
@@ -116,6 +119,7 @@ private:
     qint64      rc_filter_offset;
     qint64      bw_half;
     double      rc_lnb_lo_mhz;     /*!< Current LNB LO freq in MHz */
+    DXCSpotInfo rc_new_dxc_spot;   /*!< Info for New Call Tag */
 
     int         rc_mode;           /*!< Current mode. */
     int         rc_passband_lo;    /*!< Current low cutoff. */
@@ -147,6 +151,8 @@ private:
     QString     cmd_AOS();
     QString     cmd_LOS();
     QString     cmd_lnb_lo(QStringList cmdlist);
+    QString     cmd_set_dxc_spot(QStringList cmdlist);
+    QString     cmd_clear_dxc_spot(QStringList cmdlist);
     QString     cmd_dump_state() const;
 };
 
