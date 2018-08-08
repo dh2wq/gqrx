@@ -39,6 +39,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_DXCDisconnect">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -60,6 +63,9 @@
       <height>25</height>
      </rect>
     </property>
+    <property name="text">
+     <string>127.0.0.1</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_DXCPort">
     <property name="geometry">
@@ -70,6 +76,9 @@
       <height>25</height>
      </rect>
     </property>
+    <property name="text">
+     <string>7300</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_DXCSpottimeout">
     <property name="geometry">
@@ -79,6 +88,9 @@
       <width>40</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>10</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_DXCSpottimeout">

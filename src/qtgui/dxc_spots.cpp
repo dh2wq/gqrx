@@ -59,10 +59,9 @@ void DXCSpots::add(DXCSpotInfo &info)
 
 void DXCSpots::checkSpotTimeout()
 {
-#define SPOT_TIMEOUT_SEC (1 * 60)
     for (int i = 0; i < m_DXCSpotList.size(); i++)
     {
-        if ( SPOT_TIMEOUT_SEC < m_DXCSpotList[i].time.secsTo(QTime::currentTime() ))
+        if ( m_DXCSpotTimeout < m_DXCSpotList[i].time.secsTo(QTime::currentTime() ))
         {
             m_DXCSpotList.removeAt(i);
         }

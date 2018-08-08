@@ -42,12 +42,12 @@ void DXC_Options::showEvent(QShowEvent * event)
 
 void DXC_Options::on_pushButton_DXCConnect_clicked()
 {
-    TCPSocket->connectToHost("dxc.nc7j.com",7300);
+    DXCSpots::Get().setSpotTimeout(ui->lineEdit_DXCSpottimeout->text().toInt());
+    TCPSocket->connectToHost(ui->lineEdit_DXCAddress->text(),ui->lineEdit_DXCPort->text().toInt());
     if(!TCPSocket->waitForConnected(5000))
     {
         qDebug() << "Error: " << TCPSocket->errorString();
     }
-    qDebug() << "Button Clicked";
 }
 
 void DXC_Options::on_pushButton_DXCDisconnect_clicked()
@@ -57,11 +57,15 @@ void DXC_Options::on_pushButton_DXCDisconnect_clicked()
 
 void DXC_Options::connected()
 {
-qDebug() << "connected";
+    qDebug() << "connected";
+    ui->pushButton_DXCConnect->setDisabled(true);
+    ui->pushButton_DXCDisconnect->setEnabled(true);
 }
 void DXC_Options::disconnected()
 {
-qDebug() << "disconnected";
+    qDebug() << "disconnected";
+    ui->pushButton_DXCDisconnect->setDisabled(true);
+    ui->pushButton_DXCConnect->setEnabled(true);
 }
 void DXC_Options::readyToRead()
 {
