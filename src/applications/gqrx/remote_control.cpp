@@ -39,8 +39,6 @@ RemoteControl::RemoteControl(QObject *parent) :
     rc_filter_offset = 0;
     bw_half = 740e3;
     rc_lnb_lo_mhz = 0.0;
-//    rc_new_dxc_spot.frequency = 0;
-//    rc_new_dxc_spot.name = "";
     rc_mode = 0;
     rc_passband_lo = 0;
     rc_passband_hi = 0;
@@ -243,8 +241,6 @@ void RemoteControl::startRead()
         answer = cmd_LOS();
     else if (cmd == "LNB_LO")
         answer = cmd_lnb_lo(cmdlist);
-//    else if (cmd == "SET_SPOT")
-//        answer = cmd_set_dxc_spot(cmdlist);
     else if (cmd == "\\dump_state")
         answer = cmd_dump_state();
     else if (cmd == "q" || cmd == "Q")
@@ -289,14 +285,6 @@ void RemoteControl::setLnbLo(double freq_mhz)
 {
     rc_lnb_lo_mhz = freq_mhz;
 }
-
-///*! \brief Slot called when call Tag is setted
-// *  \param CallTag new Tag including Call, frequency, optional tag, and optional time to deleted
-// */
-//void RemoteControl::setNewClusterSpot(DXCSpotInfo info)
-//{
-//    rc_new_dxc_spot = info;
-//}
 
 void RemoteControl::setBandwidth(qint64 bw)
 {
@@ -759,40 +747,6 @@ QString RemoteControl::cmd_lnb_lo(QStringList cmdlist)
     }
 }
 
-///* Set Tag for DxCluster Spots*/
-//QString RemoteControl::cmd_set_dxc_spot(QStringList cmdlist)
-//{
-//    //normal Cluster Spot
-//    //if(QString::compare(cmdlist[1].trimmed(),"DX") && QString::compare(cmdlist[2].trimmed(),"de"))
-//    if(cmdlist[1].contains("DX")&&cmdlist[2].contains("de"))
-//    {
-//        if(cmdlist.count() >= 8)
-//        {
-//            rc_new_dxc_spot.frequency  = cmdlist[4].toDouble() * 1000;
-//            rc_new_dxc_spot.name       = cmdlist[5].trimmed();
-//            emit newClusterSpot(rc_new_dxc_spot);
-//            return QString("RPRT 0\n");
-//        }
-//    }
-//    //SH/DX reply
-//    else//    {
-//        if(cmdlist.count() >= 7)
-//        {
-//            rc_new_dxc_spot.frequency  = cmdlist[1].toDouble() * 1000;
-//            rc_new_dxc_spot.name       = cmdlist[2].trimmed();
-//            emit newClusterSpot(rc_new_dxc_spot);
-//            return QString("RPRT 0\n");
-//        }
-//    }
-//   return QString("RPRT 1\n");
-//}
-
-/*
- * '\dump_state' used by hamlib clients, e.g. xdx, fldigi, rigctl and etc
- * More info:
- *  https://github.com/N0NB/hamlib/blob/master/include/hamlib/rig.h (bit fields)
- *  https://github.com/N0NB/hamlib/blob/master/dummy/netrigctl.c
- */
 QString RemoteControl::cmd_dump_state() const
 {
     return QString(
