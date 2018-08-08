@@ -53,6 +53,7 @@ void DXCSpots::add(DXCSpotInfo &info)
     info.time = QTime::currentTime();
     m_DXCSpotList.append(info);
     std::stable_sort(m_DXCSpotList.begin(),m_DXCSpotList.end());
+    qDebug() << "Call: " << info.name << "Freq: " << info.frequency << "Time: " << info.time;
     emit( DXCSpotsChanged() );
 }
 

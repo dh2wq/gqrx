@@ -123,6 +123,11 @@ MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
     // create I/Q tool widget
     iq_tool = new CIqTool(this);
 
+    // create DXC Objects
+    dxc_options = new DXC_Options(this);
+    dxc_timer = new QTimer(this);
+    dxc_timer->start(1000);
+
     /* create dock widgets */
     uiDockRxOpt = new DockRxOpt();
     uiDockRDS = new DockRDS();
@@ -257,8 +262,7 @@ MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
     connect(uiDockBookmarks->actionAddBookmark, SIGNAL(triggered()), this, SLOT(on_actionAddBookmark_triggered()));
 
     //DXC Spots
-    connect(remote, SIGNAL(newClusterSpot(DXCSpotInfo)),this , SLOT(addClusterSpot(DXCSpotInfo)));
-    dxc_timer = new QTimer(this);
+    connect(&DXCSpots::Get(), SIGNAL(DXCSpotsChanged()),this , SLOT(addClusterSpot()));
     connect(dxc_timer, SIGNAL(timeout()), this, SLOT(checkDXCSpotTimeout()));
 
     // I/Q playback
@@ -348,6 +352,9 @@ MainWindow::~MainWindow()
     audio_fft_timer->stop();
     delete audio_fft_timer;
 
+    dxc_timer->stop();
+    delete dxc_timer;
+
     if (m_settings)
     {
         m_settings->setValue("configversion", 2);
@@ -370,6 +377,7 @@ MainWindow::~MainWindow()
     }
 
     delete iq_tool;
+    delete dxc_options;
     delete ui;
     delete uiDockRxOpt;
     delete uiDockAudio;
@@ -2027,6 +2035,11 @@ void MainWindow::afsk1200win_closed()
     dec_afsk1200 = 0;
 }
 
+/** Show DXC Options. */
+void MainWindow::on_actionDX_Cluster_triggered()
+{
+    dxc_options->show();
+}
 
 /**
  * Cyclic processing for acquiring samples from receiver and processing them
@@ -2312,10 +2325,8 @@ void MainWindow::on_actionAddBookmark_triggered()
     }
 }
 
-void MainWindow::addClusterSpot(DXCSpotInfo info)
+void MainWindow::addClusterSpot()
 {
-    dxc_timer->start(1000);
-    DXCSpots::Get().add(info);
     ui->plotter->updateOverlay();
 }
 
