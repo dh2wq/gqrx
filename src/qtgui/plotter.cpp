@@ -1396,7 +1396,7 @@ void CPlotter::drawOverlay()
 
             if(level == nLevels)
                 level = 0;
-
+            tagEnd[level] = x + nameWidth + slant - 1;
             m_DXCSpotTags.append(qMakePair<QRect, qint64>(QRect(x, level * levelHeight, nameWidth + slant, fontHeight), dxcspots[i].frequency));
 
             QColor color = QColor(dxcspots[i].GetColor());
