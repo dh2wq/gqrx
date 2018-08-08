@@ -747,6 +747,12 @@ QString RemoteControl::cmd_lnb_lo(QStringList cmdlist)
     }
 }
 
+/*
+ * '\dump_state' used by hamlib clients, e.g. xdx, fldigi, rigctl and etc
+ * More info:
+ *  https://github.com/N0NB/hamlib/blob/master/include/hamlib/rig.h (bit fields)
+ *  https://github.com/N0NB/hamlib/blob/master/dummy/netrigctl.c
+ */
 QString RemoteControl::cmd_dump_state() const
 {
     return QString(
