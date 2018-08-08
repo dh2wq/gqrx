@@ -588,6 +588,7 @@ bool MainWindow::loadConfig(const QString cfgfile, bool check_crash,
     uiDockRxOpt->readSettings(m_settings);
     uiDockFft->readSettings(m_settings);
     uiDockAudio->readSettings(m_settings);
+    dxc_options->readSettings(m_settings);
 
     {
         int64_val = m_settings->value("input/frequency", 14236000).toLongLong(&conv_ok);
@@ -707,6 +708,7 @@ void MainWindow::storeSession()
 
         remote->saveSettings(m_settings);
         iq_tool->saveSettings(m_settings);
+        dxc_options->saveSettings(m_settings);
 
         {
             int     flo, fhi;

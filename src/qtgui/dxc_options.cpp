@@ -46,24 +46,24 @@ void DXC_Options::on_pushButton_DXCConnect_clicked()
     TCPSocket->connectToHost(ui->lineEdit_DXCAddress->text(),ui->lineEdit_DXCPort->text().toInt());
     if(!TCPSocket->waitForConnected(5000))
     {
-        qDebug() << "Error: " << TCPSocket->errorString();
+        ui->plainTextEdit_DXCMonitor->appendPlainText(TCPSocket->errorString());
     }
 }
 
 void DXC_Options::on_pushButton_DXCDisconnect_clicked()
 {
-    TCPSocket->close();
+    TCPSocket->write("Bye\r\n");
 }
 
 void DXC_Options::connected()
 {
-    qDebug() << "connected";
+    ui->plainTextEdit_DXCMonitor->appendPlainText("Connected");
     ui->pushButton_DXCConnect->setDisabled(true);
     ui->pushButton_DXCDisconnect->setEnabled(true);
 }
 void DXC_Options::disconnected()
 {
-    qDebug() << "disconnected";
+    ui->plainTextEdit_DXCMonitor->appendPlainText("Disconnected");
     ui->pushButton_DXCDisconnect->setDisabled(true);
     ui->pushButton_DXCConnect->setEnabled(true);
 }
@@ -73,11 +73,11 @@ void DXC_Options::readyToRead()
     QStringList Spot;
     QString incommingMessage;
     incommingMessage = TCPSocket->readAll();
-    qDebug() << incommingMessage.simplified();
+    ui->plainTextEdit_DXCMonitor->appendPlainText(incommingMessage);
     if(incommingMessage.contains("Please enter your callsign:"))
     {
-        TCPSocket->write("DH2WQ\r\n");
-        qDebug() << "send call";
+        TCPSocket->write(ui->lineEdit_DXCUSername->text().append("\r\n").toUtf8());
+        ui->plainTextEdit_DXCMonitor->appendPlainText(ui->lineEdit_DXCUSername->text().append("\r\n"));
     }
     else if(incommingMessage.contains("DX de"))
     {
@@ -86,7 +86,32 @@ void DXC_Options::readyToRead()
         info.frequency = Spot[3].toDouble() * 1000;
         DXCSpots::Get().add(info);
     }
+}
+void DXC_Options::saveSettings(QSettings *settings)
+{
+    if (!settings)
+        return;
 
+    settings->beginGroup("dxcluster");
 
+    settings->setValue("DXCAddress", ui->lineEdit_DXCAddress->text());
+    settings->setValue("DXCPort", ui->lineEdit_DXCPort->text());
+    settings->setValue("DXCUsername", ui->lineEdit_DXCUSername->text());
+    settings->setValue("DXCSpotTimeout", ui->lineEdit_DXCSpottimeout->text());
 
+    settings->endGroup();
+}
+
+void DXC_Options::readSettings(QSettings *settings)
+{
+    if (!settings)
+        return;
+
+    settings->beginGroup("dxcluster");
+    ui->lineEdit_DXCAddress->setText(settings->value("DXCAddress", "localhost").toString());
+    ui->lineEdit_DXCPort->setText(settings->value("DXCPort", "7300").toString());
+    ui->lineEdit_DXCUSername->setText(settings->value("DXCUsername", "nocall").toString());
+    ui->lineEdit_DXCSpottimeout->setText(settings->value("DXCSpotTimeout", "10").toString());
+
+    settings->endGroup();
 }

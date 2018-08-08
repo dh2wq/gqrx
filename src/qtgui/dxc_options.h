@@ -5,6 +5,7 @@
 #include <QCloseEvent>
 #include <QShowEvent>
 #include <QTcpSocket>
+#include <QSettings>
 
 #include <QDialog>
 
@@ -22,6 +23,8 @@ public:
 
     void closeEvent(QCloseEvent *event);
     void showEvent(QShowEvent * event);
+    void saveSettings(QSettings *settings);
+    void readSettings(QSettings *settings);
 
 private slots:
 
