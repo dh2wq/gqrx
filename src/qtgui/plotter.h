@@ -171,7 +171,7 @@ private:
         RIGHT,
         YAXIS,
         XAXIS,
-        BOOKMARK
+        TAG
     };
 
     void        drawOverlay();
@@ -270,8 +270,7 @@ private:
     float       m_PeakDetection;
     QMap<int,int>   m_Peaks;
 
-    QList< QPair<QRect, qint64> >     m_BookmarkTags;
-    QList< QPair<QRect, qint64> >     m_DXCSpotTags;
+    QList< QPair<QRect, qint64> >     Taglist;
 
     // Waterfall averaging
     quint64     tlast_wf_ms;        // last time waterfall has been updated

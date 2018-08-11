@@ -3,8 +3,6 @@
  * Gqrx SDR: Software defined radio receiver powered by GNU Radio and Qt
  *           http://gqrx.dk/
  *
- * Copyright 2013 Christian Lindner DL2VCL, Stefano Leucci.
- *
  * Gqrx is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3, or (at your option)
@@ -30,7 +28,6 @@
 #include "dxc_spots.h"
 #include <stdio.h>
 #include <wchar.h>
-#include <QDebug>
 
 DXCSpots* DXCSpots::m_pThis = 0;
 
@@ -53,7 +50,6 @@ void DXCSpots::add(DXCSpotInfo &info)
     info.time = QTime::currentTime();
     m_DXCSpotList.append(info);
     std::stable_sort(m_DXCSpotList.begin(),m_DXCSpotList.end());
-    qDebug() << "Call: " << info.name << "Freq: " << info.frequency << "Time: " << info.time;
     emit( DXCSpotsChanged() );
 }
 

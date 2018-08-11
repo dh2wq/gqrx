@@ -2242,11 +2242,6 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionAboutQt_triggered()
 {
     QMessageBox::aboutQt(this, tr("About Qt"));
-    DXCSpotInfo spot;
-    spot.frequency = 14050000;
-    spot.name = "DH2WQ";
-    DXCSpots::Get().add(spot);
-    ui->plotter->updateOverlay();
 }
 
 void MainWindow::on_actionAddBookmark_triggered()

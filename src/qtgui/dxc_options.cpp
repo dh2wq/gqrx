@@ -1,6 +1,5 @@
 #include "dxc_options.h"
 #include "ui_dxc_options.h"
-#include <QDebug>
 #include <QTcpSocket>
 #include <QString>
 #include <QStringList>
