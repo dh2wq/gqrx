@@ -48,6 +48,7 @@
 #include "qtgui/ioconfig.h"
 #include "mainwindow.h"
 #include "qtgui/dxc_spots.h"
+#include "qtgui/panadapter.h"
 
 /* Qt Designer files */
 #include "ui_mainwindow.h"
@@ -127,6 +128,11 @@ MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
     dxc_options = new DXC_Options(this);
     dxc_timer = new QTimer(this);
     dxc_timer->start(1000);
+
+    // create Panadapter Objects
+    panadapter = new Panadapter(this);
+    panadapter_refresh_timer = new QTimer(this);
+    panadapter_refresh_timer->start(400);
 
     /* create dock widgets */
     uiDockRxOpt = new DockRxOpt();
@@ -265,6 +271,11 @@ MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
     connect(&DXCSpots::Get(), SIGNAL(DXCSpotsChanged()),this , SLOT(addClusterSpot()));
     connect(dxc_timer, SIGNAL(timeout()), this, SLOT(checkDXCSpotTimeout()));
 
+    //Panadapter
+    connect(panadapter_refresh_timer, SIGNAL(timeout()), panadapter, SLOT(updateRigFrequency()));
+    connect(panadapter, SIGNAL(newLnbLo(double)), uiDockInputCtl, SLOT(setLnbLo(double)));
+    connect(panadapter, SIGNAL(newLnbLo(double)), this, SLOT(setLnbLo(double)));
+
     // I/Q playback
     connect(iq_tool, SIGNAL(startRecording(QString)), this, SLOT(startIqRecording(QString)));
     connect(iq_tool, SIGNAL(stopRecording()), this, SLOT(stopIqRecording()));
@@ -355,6 +366,9 @@ MainWindow::~MainWindow()
     dxc_timer->stop();
     delete dxc_timer;
 
+    panadapter_refresh_timer->stop();
+    delete panadapter_refresh_timer;
+
     if (m_settings)
     {
         m_settings->setValue("configversion", 2);
@@ -378,6 +392,7 @@ MainWindow::~MainWindow()
 
     delete iq_tool;
     delete dxc_options;
+    delete panadapter;
     delete ui;
     delete uiDockRxOpt;
     delete uiDockAudio;
@@ -2043,6 +2058,12 @@ void MainWindow::on_actionDX_Cluster_triggered()
     dxc_options->show();
 }
 
+/** Show Panadapter Dialog. */
+void MainWindow::on_actionPanadapter_triggered()
+{
+    panadapter->show();
+}
+
 /**
  * Cyclic processing for acquiring samples from receiver and processing them
  * with data decoders (see dec_* objects)
@@ -2331,4 +2352,9 @@ void MainWindow::checkDXCSpotTimeout()
 {
     DXCSpots::Get().checkSpotTimeout();
     ui->plotter->updateOverlay();
+}
+
+void MainWindow::updateRigFrequency()
+{
+    qDebug() << "ping mainWindow";
 }

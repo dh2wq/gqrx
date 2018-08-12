@@ -43,6 +43,7 @@
 #include "qtgui/iq_tool.h"
 #include "qtgui/dxc_options.h"
 #include "qtgui/dxc_spots.h"
+#include "qtgui/panadapter.h"
 
 #include "applications/gqrx/remote_control.h"
 
@@ -104,6 +105,7 @@ private:
 
     CIqTool        *iq_tool;
     DXC_Options    *dxc_options;
+    Panadapter     *panadapter;
 
 
     /* data decoders */
@@ -116,6 +118,7 @@ private:
     QTimer   *audio_fft_timer;
     QTimer   *rds_timer;
     QTimer   *dxc_timer;
+    QTimer   *panadapter_refresh_timer;
 
     receiver *rx;
 
@@ -240,6 +243,8 @@ private slots:
     void audioFftTimeout();
     void rdsTimeout();
     void checkDXCSpotTimeout();
+    void on_actionPanadapter_triggered();
+    void updateRigFrequency();
 };
 
 #endif // MAINWINDOW_H

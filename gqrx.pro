@@ -143,7 +143,8 @@ SOURCES += \
     src/receivers/receiver_base.cpp \
     src/receivers/wfmrx.cpp \
     src/qtgui/dxc_spots.cpp \
-    src/qtgui/dxc_options.cpp
+    src/qtgui/dxc_options.cpp \
+    src/qtgui/panadapter.cpp
 
 HEADERS += \
     src/applications/gqrx/gqrx.h \
@@ -204,7 +205,8 @@ HEADERS += \
     src/receivers/receiver_base.h \
     src/receivers/wfmrx.h \
     src/qtgui/dxc_spots.h \
-    src/qtgui/dxc_options.h
+    src/qtgui/dxc_options.h \
+    src/qtgui/panadapter.h
 
 FORMS += \
     src/applications/gqrx/mainwindow.ui \
@@ -222,7 +224,8 @@ FORMS += \
     src/qtgui/dockrxopt.ui \
     src/qtgui/ioconfig.ui \
     src/qtgui/nb_options.ui \
-    src/qtgui/dxc_options.ui
+    src/qtgui/dxc_options.ui \
+    src/qtgui/panadapter.ui
 
 # Use pulseaudio (ps: could use equals? undocumented)
 equals(AUDIO_BACKEND, "pulseaudio"): {

@@ -195,7 +195,7 @@
      <x>0</x>
      <y>0</y>
      <width>521</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -243,6 +243,8 @@
     <addaction name="actionAFSK1200"/>
     <addaction name="separator"/>
     <addaction name="actionDX_Cluster"/>
+    <addaction name="separator"/>
+    <addaction name="actionPanadapter"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Tools"/>
@@ -548,6 +550,11 @@
    </property>
    <property name="toolTip">
     <string>Open DX Cluster Dialog</string>
+   </property>
+  </action>
+  <action name="actionPanadapter">
+   <property name="text">
+    <string>Panadapter</string>
    </property>
   </action>
  </widget>
