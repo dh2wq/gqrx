@@ -1,8 +1,5 @@
 #include "panadapter.h"
 #include "ui_panadapter.h"
-#include <hamlib/riglist.h>
-#include <hamlib/rig.h>
-#include <hamlib/rigclass.h>
 #include <QDebug>
 
 Panadapter::Panadapter(QWidget *parent) :
@@ -92,4 +89,20 @@ void Panadapter::updateRigFrequency()
         ui->plainTextEdit_RigComMonitor->appendPlainText("f");
         emit newLnbLo(m_rigFreq - ui->lineEdit_PanIfFrequency_3->text().toDouble());
     }
+}
+
+void Panadapter::on_radioButton_UseRigctld_clicked()
+{
+    ui->groupBox_Rigctld->setEnabled(true);
+    ui->groupBox_SerialConnection->setDisabled(true);
+    ui->radioButton_UseRigctld->setChecked(true);
+    ui->radioButton_UseComPort->setChecked(false);
+}
+
+void Panadapter::on_radioButton_UseComPort_clicked()
+{
+    ui->groupBox_Rigctld->setDisabled(true);
+    ui->groupBox_SerialConnection->setEnabled(true);
+    ui->radioButton_UseRigctld->setChecked(false);
+    ui->radioButton_UseComPort->setChecked(true);
 }

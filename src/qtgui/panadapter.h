@@ -7,8 +7,6 @@
 #include <QSettings>
 #include <QDialog>
 #include <QTcpSocket>
-#include <hamlib/rig.h>
-#include <hamlib/riglist.h>
 
 namespace Ui {
 class Panadapter;
@@ -37,6 +35,10 @@ private slots:
     void updateRigFrequency();
 
     void on_lineEdit_RigCommand_returnPressed();
+
+    void on_radioButton_UseRigctld_clicked();
+
+    void on_radioButton_UseComPort_clicked();
 
 signals:
     void newLnbLo(double freq_mhz);
