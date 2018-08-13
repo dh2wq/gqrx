@@ -131,8 +131,6 @@ MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
 
     // create Panadapter Objects
     panadapter = new Panadapter(this);
-    panadapter_refresh_timer = new QTimer(this);
-    panadapter_refresh_timer->start(400);
 
     /* create dock widgets */
     uiDockRxOpt = new DockRxOpt();
@@ -272,9 +270,9 @@ MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
     connect(dxc_timer, SIGNAL(timeout()), this, SLOT(checkDXCSpotTimeout()));
 
     //Panadapter
-    connect(panadapter_refresh_timer, SIGNAL(timeout()), panadapter, SLOT(updateRigFrequency()));
-    connect(panadapter, SIGNAL(newLnbLo(double)), uiDockInputCtl, SLOT(setLnbLo(double)));
-    connect(panadapter, SIGNAL(newLnbLo(double)), this, SLOT(setLnbLo(double)));
+    connect(panadapter, SIGNAL(newLoFrequency(double)), uiDockInputCtl, SLOT(setLnbLo(double)));
+    connect(panadapter, SIGNAL(newLoFrequency(double)), this, SLOT(setLnbLo(double)));
+    connect(panadapter, SIGNAL(newFrequency(qint64)),ui->freqCtrl, SLOT(setFrequency(qint64)));
 
     // I/Q playback
     connect(iq_tool, SIGNAL(startRecording(QString)), this, SLOT(startIqRecording(QString)));
@@ -365,9 +363,6 @@ MainWindow::~MainWindow()
 
     dxc_timer->stop();
     delete dxc_timer;
-
-    panadapter_refresh_timer->stop();
-    delete panadapter_refresh_timer;
 
     if (m_settings)
     {

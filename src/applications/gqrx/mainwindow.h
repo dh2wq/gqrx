@@ -118,7 +118,6 @@ private:
     QTimer   *audio_fft_timer;
     QTimer   *rds_timer;
     QTimer   *dxc_timer;
-    QTimer   *panadapter_refresh_timer;
 
     receiver *rx;
 

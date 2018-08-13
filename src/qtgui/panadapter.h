@@ -7,6 +7,7 @@
 #include <QSettings>
 #include <QDialog>
 #include <QTcpSocket>
+#include <QTimer>
 
 namespace Ui {
 class Panadapter;
@@ -40,13 +41,18 @@ private slots:
 
     void on_radioButton_UseComPort_clicked();
 
+    void on_checkBox_EnableComMonitor_clicked();
+
 signals:
-    void newLnbLo(double freq_mhz);
+    void newLoFrequency(double freq_mhz);
+    void newFrequency(qint64 freq_mhz);
 
 private:
     Ui::Panadapter *ui;
     QTcpSocket *TCPSocket;
     double m_rigFreq;
+    bool m_isConnected;
+    QTimer   *panadapter_refresh_timer;
 };
 
 #endif // PANADAPTER_H
