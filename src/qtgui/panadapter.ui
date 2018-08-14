@@ -235,7 +235,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_PanIfFrequency_3">
+       <widget class="QLineEdit" name="lineEdit_PanIfFrequency">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -295,7 +295,7 @@
  <tabstops>
   <tabstop>spinBox_PanRadioType</tabstop>
   <tabstop>lineEdit_PanRigPort</tabstop>
-  <tabstop>lineEdit_PanIfFrequency_3</tabstop>
+  <tabstop>lineEdit_PanIfFrequency</tabstop>
   <tabstop>lineEdit_PanRigctldAddress</tabstop>
   <tabstop>lineEdit_PanRigctldPort</tabstop>
  </tabstops>

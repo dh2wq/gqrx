@@ -109,15 +109,14 @@ void Panadapter::updateRigFrequency()
         {
             TCPSocket->write("f\r\n");
             ui->plainTextEdit_RigComMonitor->appendPlainText("f");
+            emit setFilterOffset(0);
+            emit newLoFrequency(m_rigFreq - (ui->lineEdit_PanIfFrequency->text().toDouble()));
             emit newFrequency((qint64)(m_rigFreq * 1000000));
-            emit newLoFrequency(m_rigFreq - ui->lineEdit_PanIfFrequency_3->text().toDouble());
         }
         else if(ui->checkBox_CtrlRig->isChecked())
         {
             TCPSocket->write("F\r\n");
             ui->plainTextEdit_RigComMonitor->appendPlainText("F");
-            emit newFrequency((qint64)(m_rigFreq * 1000000));
-            emit newLoFrequency(m_rigFreq - ui->lineEdit_PanIfFrequency_3->text().toDouble());
         }
 
     }

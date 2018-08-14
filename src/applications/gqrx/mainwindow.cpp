@@ -96,6 +96,7 @@ MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
     rx = new receiver("", "", 1);
     rx->set_rf_freq(144500000.0f);
 
+
     // remote controller
     remote = new RemoteControl();
 
@@ -273,6 +274,7 @@ MainWindow::MainWindow(const QString cfgfile, bool edit_conf, QWidget *parent) :
     connect(panadapter, SIGNAL(newLoFrequency(double)), uiDockInputCtl, SLOT(setLnbLo(double)));
     connect(panadapter, SIGNAL(newLoFrequency(double)), this, SLOT(setLnbLo(double)));
     connect(panadapter, SIGNAL(newFrequency(qint64)),ui->freqCtrl, SLOT(setFrequency(qint64)));
+    connect(panadapter, SIGNAL(setFilterOffset(qint64)), uiDockRxOpt, SLOT(setFilterOffset(qint64)));
 
     // I/Q playback
     connect(iq_tool, SIGNAL(startRecording(QString)), this, SLOT(startIqRecording(QString)));

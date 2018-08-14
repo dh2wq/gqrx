@@ -46,6 +46,7 @@ private slots:
 signals:
     void newLoFrequency(double freq_mhz);
     void newFrequency(qint64 freq_mhz);
+    void setFilterOffset(qint64 freq_hz);
 
 private:
     Ui::Panadapter *ui;

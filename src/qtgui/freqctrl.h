@@ -56,6 +56,7 @@ signals:
 
 public slots:
     void    setFrequency(qint64 freq);
+    void    clearFreq();
 
 protected:
     void    paintEvent(QPaintEvent *);
@@ -74,7 +75,7 @@ private:
     void    decDigit();
     void    incFreq();
     void    decFreq();
-    void    clearFreq();
+    //void    clearFreq();
     void    cursorHome();
     void    cursorEnd();
     void    moveCursorLeft();
